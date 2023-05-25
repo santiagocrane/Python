@@ -1,0 +1,245 @@
+# Santiago Crane Pardo
+# Game Theory Assingment
+# A2: Game Theory - The Python Equilibrium
+# January 22, 2023
+
+
+# import random package
+import random 
+
+# Greeting and ask the user for his name
+
+user_name = input("""\n
+Hello! I am Lewis Hamilton, a professional Formula One racing driver from the United Kingdom.\n
+I have been competing in the sport for over a decade and have won several world championships.\n
+Today 1’m not only your host, but you will be racing against me ! 
+                    
+                    What’s your name pilot? 
+                    
+                     
+                        """).capitalize()
+# Further explanation, ask to enter to continue
+print(f"""\n\n {"-"*120}
+It is a pleasure to meet you, {user_name}\n
+Your task today is to choose the best lane to optimize the outcome and win the race against me.\n
+So, fasten your seatbelt and read carefully the following instructions.""")
+
+input("Press enter to continue.")
+
+
+print(f""" \n{"-"*120}
+    
+⚫ Its only my car against yours, on a track with three lanes: left, center and right. \n
+⚫ You have the first move and you may choose to drive on either the left, center, or right lane. \n
+⚫ Depending on what you choose, the outcome (that is in seconds to be discounted from the total race time) depends on the combination of lanes chosen by both cars, the bigger the amount, the better outcome.\n
+    
+
+    """)
+#Validation parto where the "yes" and "no" variables are adapted to different inputs    
+validation = 0
+affirmative_options = ['yes','y','ok','sure','yeah','yup','yessir','yess','ys','ye','Yes']
+negative_options = ['no','n','false','nah','nope','neh','no thanks']
+
+while validation == 0:
+
+#This part the user decides to play or not, depending on what he/she chooses the game changes   
+    user_play = input(f" Tell me {user_name},are you ready to race?  ").lower()
+    
+
+        
+#Validation process for the answer
+    if user_play in affirmative_options:
+            validation += 1
+            user_play = "yes"
+    elif user_play in negative_options:
+            validation += 1
+            user_play = "no"
+    else:
+            print('''
+            Sorry {user_name}, I dont know what " {user_play} " means. Please come back later
+            ''')
+#If the user decides to play, he will play only one game against the program
+if "yes" in user_play:
+    
+    print("Sounds good! let me explain how it works")
+    
+# Board Game, game rules and variables and matrix
+    print(f"""
+    
+{user_name}, The payoffs are represented in the following table. 
+Keep in mind that the result is (Lewis/{user_name})
+
+    \n
+    Lewis\ {user_name} \t    Left \t\t Right \t\t\t Center
+    ----------------------------------------------------------------------------------
+    Left\t\t 12 / 11 \t\t 11 / 1 \t\t 14 / 15
+    Right \t\t 11 / 10 \t\t 10 / 9 \t\t 12 / 12
+    Center \t\t 10 / 15 \t\t 10 / 13 \t\t 13 / 7
+    """)
+    
+    
+# Save board points and results in a dictionary for all 9 variables
+    dictionary_results = {"(L, L)": (12,11),
+                          "(L, R)": (11,1),
+                          "(L, C)": (14,15),
+                          "(R, L)": (11,10),
+                          "(R, R)": (10,9),
+                          "(R, C)": (12,12),
+                          "(C, L)": (10,15),
+                          "(C, R)": (10,13),
+                          "(C, C)": (13,7) }
+    
+# prompt the user to select what to do >(only three options: Left, Right, Center)
+    user_choose = input("""
+What lane do you choose? *keep in mind that I will choose the best outcome that maximizes my points once you have decided*
+Select:
+
+    - 'L' to go Left
+    - 'R' to go Right
+    - 'C' to go Center
+    """).upper()
+    
+   
+    
+# conditional structure with the outputs of each scenario
+#The user will have to analyze that Lewis Hamilton has a Dominant Strategy as second player, as he will always choose the left lane to maximixe his outcome
+    if user_choose == "L":
+        user_result = dictionary_results["(L, L)"][1]
+        computer_result = dictionary_results["(L, L)"][0]
+        print(f""" 
+    {"-"*120}
+    You've decided the left lane, as well as me!
+    You earned {user_result} points.
+    I earned {computer_result}""")
+    
+    elif user_choose == "R":
+        user_result = dictionary_results["(L, R)"][1]
+        computer_result = dictionary_results["(L, R)"][0]
+        print(f"""
+    {"-"*120}
+    You've decided the right lane and I still decided the left!
+    You earned {user_result} points.
+    I earned {computer_result}""")
+
+    elif user_choose == "C":
+        user_result = dictionary_results["(L, C)"][1]
+        computer_result = dictionary_results["(L, C)"][0]
+        print(f"""
+    {"-"*120}
+    You've decided the right lane and I still decided the left!
+    You earned {user_result} points.
+    I earned {computer_result}""")
+        
+        
+ # Declaring a winner for the simulated game
+
+
+    if user_result > computer_result:
+        print(f"""
+{"*"*120}
+                                \033[1mCongrats, you won!\033[0m
+{"*"*120}""")
+
+    elif user_result == computer_result:
+        print(f"""
+{"*"*120}        
+                                    \033[1mWell we tie!\033[0m
+{"*"*120}""")
+
+    elif user_result <= computer_result:
+        print(f"""
+{"*"*120}
+                            \033[1mCongrats to me, I beat you!\033[0m
+{"*"*120}""")
+        
+#------------------------------------Part #2, game simulation when player says "no"-----------------------------------------------------------------
+
+if "no" in user_play:
+    print(f"""
+{"-"*120}   
+I understand, this must be a difficult time for you. 
+Either way, I will play this game 5 times and see who is the winner! 
+
+Same rules apply, {user_name}, The payoffs are represented in the following table. 
+Keep in mind that the result is (Lewis/{user_name})
+
+    \n
+    Lewis\ {user_name} \t    Left \t\t Right \t\t\t Center
+    ----------------------------------------------------------------------------------
+    Left\t\t 12 / 11 \t\t 11 / 1 \t\t 14 / 15
+    Right \t\t 11 / 10 \t\t 10 / 9 \t\t 12 / 12
+    Center \t\t 10 / 15 \t\t 10 / 13 \t\t 13 / 7
+
+""")
+    
+
+    input("""Press enter to continue.
+          
+          
+          """)
+
+
+    print("-"*120)
+# Save board points and results in a dictionary for all 9 variables    
+    dictionary_results = {"(L, L)": (12,11),
+                          "(L, R)": (11,1),
+                          "(L, C)": (14,15),
+                          "(R, L)": (11,10),
+                          "(R, R)": (10,9),
+                          "(R, C)": (12,12),
+                          "(C, L)": (10,15),
+                          "(C, R)": (10,13),
+                          "(C, C)": (13,7) }
+#Creating the Scores Variables that will acummulate the results
+    score1=0
+    score2=0
+#Defining the Lanes for the random options    
+    lanes = ["L","R","C"]
+    games = ("\033[1mRound 1\033[0m", "\033[1mRound 2\033[0m", "\033[1mRound 3\033[0m", "\033[1mRound 4\033[0m", "\033[1mRound 5\033[0m")
+    
+#Loop that runs 5 random scenarios
+    for i in games:
+        player1_choose = random.choice(lanes)
+        player1_score = dictionary_results[f"({player1_choose}, {player2_choose})"][0]
+        
+        player2_choose = random.choice(lanes)
+        player2_score = dictionary_results[f"({player1_choose}, {player2_choose})"][1]
+    
+        score1 += player1_score
+        score2 += player2_score
+        
+        print(f"""{i} 
+              Lewis Hamilton choose {player1_choose} and earned \033[1m{dictionary_results[f'({player1_choose}, {player2_choose})'][0]} points.\033[0m
+              {user_name} choose {player2_choose} and earned \033[1m{dictionary_results[f'({player1_choose}, {player2_choose})'][1]} points.\033[0m""")
+    
+# Declaring a winner for each scenarios
+        if player1_score < player2_score:
+            print(f"""Congrats, you won!""")
+
+        elif player1_score == player2_score:
+            print(f"""Well we tie!""")
+
+        elif player1_score >= player2_score:
+            print(f"""Congrats to me, I beat you!""")
+
+        print("-"*120)
+#Defining the total overall score for the 5 scenarios      
+    print(f""" 
+        
+        
+{"*"*120}       
+My total Score is {score1}
+Your total score is {score2}""")
+        
+    if  score1< score2 :
+            print(f"""\033[1mCongrats, you won!\033[0m
+{"*"*120}""")
+
+    elif score1 == score2 :
+            print(f"""\033[1mWell we tie!\033[0m
+{"*"*120}""")
+
+    elif score1 >= score2:
+            print(f"""\033[1mCongrats to me, I beat you!\033[0m
+{"*"*120} """)
+        

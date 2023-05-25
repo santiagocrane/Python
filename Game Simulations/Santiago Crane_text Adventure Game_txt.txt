@@ -1,0 +1,298 @@
+#Santiago Crane Pardo
+#Python for Data Analysts: Methods & Tools - 
+#DAT-7466 - BMBANDD1
+#Assignment
+#A1: Text Adventure Game
+
+
+#Welcome message that tells the user what to expect. 
+print("""
+
+🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌲🌳🌲🌳🌲🌳
+
+Welcome to the world of Middle-earth, a land of adventure and wonder, where
+the tales of The Lord of the Rings come to life. As a player, you will embark 
+on a journey through the forests, mountains, and cities of this ancient world,
+discovering secrets and uncovering mysteries that have long been hidden. 
+
+Whether you're battling fierce orcs, exploring the ruins of ancient kingdoms,
+or delving into the depths of dark mines, the world of Middle-earth is full 
+of excitement and adventure. 
+
+So grab your sword, pack your rucksack, and set out on an epic quest through
+the land of the free peoples. 
+
+🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌳🌲🌲🌳🌲🌳🌲🌳
+
+\033[1mGood luck on your journey, brave adventurer.\033[0m""")
+
+input("<Press enter to continue>\n")
+
+
+# Message that runs when the player runs out of lives
+def fail():
+    print("Looks like you have ran out of lives. Better luck next time!")
+
+    
+#Actual adventure game that starts by calling adventure_game()    
+def adventure_game():
+   
+    stage = 1 #Stage definition
+    lives = 3 # Number of lives assigned for the player
+
+# List of possible options to be input by the player in each diffetent stages\
+
+    stage1_a =["Left","left","LEFT","A","a","LeFt","LFT","lft","l","L"]
+    stage1_b =["Right","right","RIGHT","R","r","B","b"]
+    stage2_a =["open", "Open", "OPEN", "O","o", "a","A", "OPN", "opn"]
+    stage2_b =["LEAVE", "leave", "L","l", "Leve", "lv", "b", "B"]
+    stage3_a =["keep", "Keep", "KEEP", "KP", "kp", "Kp", "a", "A","k","K"]
+    stage3_b =["Destroy", "destroy", "b", "B", "DESTROY", "DSTROY", "dstroy","d","D"]
+
+
+
+#Loop that runs the different stages, depending on what the player chooses he/she
+#can advence or return to the same stage. 
+
+    while stage <= 3:
+        
+#----------------------------Stage #1-----------------------------------------
+
+#Stage #1, here the player will get to choose between two different roads, 
+#One of them will allow him to continue and the other one will eventually kill him. 
+
+        if stage == 1:
+            print(f"""
+{"-"*120}
+            
+            As you step into the forest, you find yourself surrounded by 
+            towering trees and the sounds of the wild. 
+            
+            You realize that you have come to a fork in the road, and you must
+            make a decision. 
+            
+            \033[1m⮪ To your LEFT,\033[0m the road winds through a dense thicket
+            of underbrush, offering the possibility of hidden treasures and 
+            unknown dangers. 
+            
+            \033[1m⮫ To your RIGHT,\033[0m the road is clear and well-trodden,
+            leading to a more certain path, but with fewer opportunities for 
+            adventure.
+            
+
+Which way will you choose?
+
+A) Left
+B) Right
+
+{"-"*120}
+""")
+
+            choice = input()
+            if choice in stage1_a: #left choise <the correct one>
+                stage += 1         #Continues to the next stage
+                print("""
+                As you continue on your journey on the left road, you come across
+                a large chest sitting at the side of the road. It appears to be
+                old and worn, but still sturdy.💼
+              
+                """)
+                
+                
+            elif choice in stage1_b:# Right choise <the one he dies>
+                lives -= 1          # Takes a life out
+                stage += 0          # Loops back to the same question
+                print("""
+                You made your decision and chose to take the right path, thinking
+                it would be the safer option.As you walked, you couldn't shake
+                off the feeling that you were being watched. Suddenly, you heard
+                the sound of orcs approaching, their fierce cries filling the air. 
+                
+                🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️
+                THE ORCS AMBUSHED YOU!!, outnumbering and overpowering you with
+                their brute strength. 
+                
+                You fought bravely, but in the end, you were overwhelmed and
+                \033[1mkilled.\033[0m
+                
+                Your journey through Middle-earth had come to a tragic end.
+                
+               ❌☠️❌☠️ \033[1mYOU LOOSE A LIFE\033[0m ❌☠️❌☠️
+                
+                """)
+                
+                input("<Press enter to continue>\n")
+                        
+                
+            else: 
+                print("Invalid choice. Please choose 'left' or 'right'.")
+                
+                
+#----------------------------Stage #2-----------------------------------------
+#Stage #2: Here the player will need to choose between opening or leaving a
+#chest he/she has found. If the player chooses to open he will continue, if not he dies.
+
+
+        elif stage == 2:
+            print(""" 
+You consider your options, wondering what might be inside the chest.
+                
+Will you take the time to try and open the chest and see what
+treasures it holds, or will you leave it behind and continue on your journey?
+            
+    A) Open 
+    B) Leave
+            """)
+            choice = input()
+            if choice in stage2_a:  #Open choise <The correct one>
+                stage += 1        #Proceeds to the next stage
+                  
+                print(f"""
+{"-"*120}
+
+                You open the chest to reveal a \033[1mgolden ring,\033[0m inscribed
+                with ancient runes. You feel an overwhelming urge to put it on,
+                and as you do, you are suddenly transported to the \033[1m
+                fiery depths of Mordor,\033[0m standing before the
+                fiery volcano.
+
+               ✨🧙‍♂️ \033[1mGandalf the Grey, the wise wizard, appears before you!\033[0m🧙‍♂️✨
+                and explains to you the true nature of the ring you hold in your
+                hand. 
+                
+        ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+        \033[1mIt is the One Ring, created by the Dark Lord Sauron to control and
+                enslave all the races of Middle-earth\033[0m
+        ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+         """)
+                
+            
+                input("<Press enter to continue>\n")
+            
+                print(f"""  
+  {"-"*120}           
+  
+            \033[1m🧙‍♂️Gandalf:\033[0m 
+             
+                The fate of the world rests on \033[1myour shoulders,\033[0m
+                and you have been chosen to destroy the Ring, the only way to 
+                defeat the Dark Lord and bring peace to the land.
+
+                But the ring holds a powerful allure, and Gandalf gives you a 
+                choice. You can either destroy the ring by throwing it into the
+                fiery chasms of the volcano, or keep it and use its power for 
+                yourself.
+                
+                """)
+               
+                
+                input("<Press enter to continue>\n")
+                
+            elif choice in stage2_b: #Leave the chest unopen <bad the player dies>
+                stage += 0           #Returns to the same question
+                lives -= 1           #Takes away a life
+                print(f"""
+                You decide to leave the chest untouched and continue your 
+                journey.You leave the glade behind, making your way deeper into
+                the forest.But as you walk, you suddenly feel a dark presence 
+                lurking in the shadows.
+                
+                🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️🧟🧟‍♀️
+                Before you can react, a GROUP OF ORCS APPEAR FROM NOWHERE❗❗
+                
+                
+
+                In the ensuing battle, you fight bravely, but the orcs are too
+                many and too strong.
+                
+                \033[1mYour quest comes to an untimely end as you fall in combat\033[0m
+                
+                ❌☠️❌☠️ \033[1mYOU LOOSE A LIFE\033[0m ❌☠️❌☠️
+                
+                                
+  {"-"*120}              
+                
+                """)
+                
+                input("<Press enter to continue>\n")
+            else:
+                print("Invalid choice. Please choose 'open' or 'leave'.")
+                
+                
+                
+#-----------------------------Stage #3----------------------------------------
+#The stage number 3, the player is now asked to take a desition between keeping
+#the ring for himself or destroy it, if he/she decides to keep it, Gandalf will
+#throw him to the lava. If he/she destroy it, the game is over. 
+
+        elif stage == 3:
+            
+            print(f"""
+            
+{"-"*120}            
+The decision is yours, adventurer. Will you choose to destroy 
+the Ring and save Middle-earth, or keep it and risk the fate of the world? 
+            
+a) Keep            
+b) Destroy            
+
+""")
+            choice = input()
+            if choice in stage3_a: #Desition to Keep the ring <Player dies>
+                lives -= 1         #Takes away one life
+                stage += 0         #Loops back to the same stage
+                
+                print("""
+                
+                As you make the decision to keep the ring, Gandalf's expression
+                turns to one of grave concern. He explains to you that the ring
+                has a corrupting influence on those who possess it, and it will
+                only bring ruin and destruction to the world if it is not 
+                destroyed.
+
+                Gandalf, with great sorrow, tells you that he has no other choice
+                but to cast you into the fiery chasms of the volcano, along with
+                the ring. As he does, you feel the intense heat and flames
+                engulfing you, and you know that your life has come to an end.
+                🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+                
+               ❌☠️❌☠️ \033[1mYOU LOOSE A LIFE\033[0m ❌☠️❌☠️
+                
+                
+                """)
+                input("<Press enter to continue>\n")
+                
+                
+            elif choice in stage3_b:
+                print(f"""
+{"-"*120}                 
+As the Ring falls into the fiery depths, there is a blinding flash of light
+and a deafening roar. The ground beneath your feet begins to shake and you feel
+the heat of the volcano's fury. But then, just as suddenly as it began, it ends.
+
+The shaking stops, the heat subsides, and the volcano becomes quiet once again.
+
+🧙‍\033[1mGandalf:\033[0m
+
+    "Well done, brave adventurer. You have saved Middle-earth from the grip of
+    the Dark Lord Sauron. The ring is destroyed and peace has been restored to
+    the land.
+    
+    The free peoples of Middle-earth will forever be in your debt".
+    
+    
+\033[1m⭐⭐You have completed your quest and have become a true hero of the age.⭐⭐\033[0m
+
+ 🏆🥇🪙🏆🥇🪙🏆🥇🪙🏆🥇🪙🏆🥇🪙🏆🥇🪙🏆🥇🪙🏆🥇🪙🏆🥇🪙🏆🥇🪙🏆
+   
+                
+                
+                """)
+                break
+            else:
+                print("Invalid choice. Please choose 'keep' or 'destroy'.")
+        if lives == 0:
+            fail()
+            break
+
+adventure_game()
